@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRID ZERO | OPERATIONAL_MANDATE_V.12.0</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;400;700&family=Oswald:wght@200;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#050505] text-gray-500 selection:bg-red-600 selection:text-white">
+
+    <div class="bg-grain"></div>
+
+    <header class="fixed top-0 w-full z-50 border-b border-[#333] bg-[#050505]/90 backdrop-blur-md px-6 py-3 flex justify-between items-center text-[10px] tracking-widest uppercase">
+        <div class="flex gap-6 items-center">
+            <div class="w-3 h-3 bg-red-600 animate-pulse"></div>
+            <a href="index.html" class="text-white font-bold hover:text-[#39FF14] transition-colors">GRID ZERO</a>
+            <span class="hidden md:inline text-gray-700">/// AREA: CORE_OPERATIONAL_MANDATE</span>
+        </div>
+        <div id="clock" class="text-white font-bold tabular-nums">00:00:00</div>
+    </header>
+
+    <main class="pt-32 pb-24 px-6 max-w-7xl mx-auto relative z-10">
+        
+        <section class="mb-32">
+            <div class="flex items-center gap-4 mb-8">
+                <span class="h-[2px] w-24 bg-red-600"></span>
+                <p class="text-red-600 text-xs font-mono tracking-[0.6em] uppercase">Binding Operational Mandate</p>
+            </div>
+            <h1 class="text-7xl md:text-[12rem] heading-font uppercase text-white leading-[0.8] mb-12 tracking-tighter">
+                Terms of<br><span class="text-[#111] [text-shadow:2px_2px_0_#333,-2px_-2px_0_#333,2px_-2px_0_#333,-2px_2px_0_#333]">Service</span>
+            </h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                <p class="font-mono text-sm leading-relaxed border-l border-[#333] pl-8 italic">
+                    By initializing a connection to Grid Zero, you acknowledge that you are entering a secure environment governed by specific technical and legal parameters. Failure to adhere to these mandates may result in automated terminal disconnection.
+                </p>
+                <div class="bg-[#0a0a0a] p-8 border border-[#333] font-mono text-[10px] flex flex-col justify-between">
+                    <div>
+                        <p class="text-white mb-2 underline tracking-widest">ENFORCEMENT_PROTOCOL</p>
+                        <p>This mandate is self-executing. Continued interaction with the 3D Lab and Telemetry modules constitutes digital signature of acceptance.</p>
+                    </div>
+                    <p class="mt-8 text-red-600">AUTHORIZED_ACCESS_ONLY</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-20">
+            
+            <aside class="hidden md:block sticky top-40 h-fit space-y-12">
+                <div>
+                    <h4 class="text-white text-xs font-bold uppercase mb-8 tracking-[0.3em]">Mandate_Index</h4>
+                    <ul class="space-y-6 text-[10px] uppercase font-mono tracking-widest text-gray-600">
+                        <li class="hover:text-red-600 cursor-pointer transition-colors flex items-center gap-2"><span class="w-4 h-[1px] bg-red-600"></span> 01. User Conduct</li>
+                        <li class="hover:text-red-600 cursor-pointer transition-colors flex items-center gap-2"><span class="w-4 h-[1px] bg-gray-800"></span> 02. Data Property</li>
+                        <li class="hover:text-red-600 cursor-pointer transition-colors flex items-center gap-2"><span class="w-4 h-[1px] bg-gray-800"></span> 03. Access Tiers</li>
+                        <li class="hover:text-red-600 cursor-pointer transition-colors flex items-center gap-2"><span class="w-4 h-[1px] bg-gray-800"></span> 04. Force Majeure</li>
+                    </ul>
+                </div>
+                <div class="border-t border-[#333] pt-8">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=GZ_LEGAL_SECURE&color=333333&bgcolor=050505" alt="Legal QR" class="w-20 h-20 opacity-30 grayscale">
+                </div>
+            </aside>
+
+            <div class="md:col-span-3 space-y-32 font-mono">
+                
+                <section>
+                    <div class="flex items-center gap-4 mb-10">
+                        <span class="text-red-600 text-lg">01/</span>
+                        <h2 class="text-white text-5xl heading-font uppercase">Operational Conduct</h2>
+                    </div>
+                    <div class="space-y-8 text-sm leading-relaxed">
+                        <p>Grid Zero is an experimental platform. Users are prohibited from utilizing the terminal for "data scraping," "stress testing," or any activity that compromises the <span class="text-white">Three.js Render Pipeline</span>. Any attempt to bypass the <span class="text-red-600">Vercel Edge Protection</span> will be logged and analyzed by our security scripts.</p>
+                        <div class="p-6 bg-[#0a0a0a] border-l-4 border-red-600">
+                            <h5 class="text-white text-xs mb-2">PROHIBITED ACTIONS:</h5>
+                            <ul class="text-[11px] space-y-1 text-gray-500">
+                                <li>- Automated bot interactions with the "Legacy Archive" scroll engine.</li>
+                                <li>- Unauthorized hotlinking of GitHub-hosted racing assets.</li>
+                                <li>- Impersonation of Grid Zero core developers or race engineers.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="flex items-center gap-4 mb-10">
+                        <span class="text-red-600 text-lg">02/</span>
+                        <h2 class="text-white text-5xl heading-font uppercase">Intellectual Assets</h2>
+                    </div>
+                    <p class="text-sm leading-relaxed mb-8">
+                        All technical diagrams, custom CSS animations, and Three.js camera configurations are protected under the Grid Zero Intellectual Property clause. While we encourage the study of our <span class="text-white">Source Code</span> on GitHub, commercial redistribution of these assets is strictly prohibited without explicit clearance.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="border border-[#333] p-4">
+                            <p class="text-[10px] text-white mb-1">ASSET_CLASS: UI_DESIGN</p>
+                            <p class="text-[9px]">Status: Proprietary</p>
+                        </div>
+                        <div class="border border-[#333] p-4">
+                            <p class="text-[10px] text-white mb-1">ASSET_CLASS: TELEMETRY_LOGS</p>
+                            <p class="text-[9px]">Status: Fair Use / Tribute</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="flex items-center gap-4 mb-10">
+                        <span class="text-red-600 text-lg">03/</span>
+                        <h2 class="text-white text-5xl heading-font uppercase">System Access Tiers</h2>
+                    </div>
+                    <p class="text-sm leading-relaxed mb-8">The terminal provides different levels of data depth based on user interaction.</p>
+                    <div class="overflow-hidden border border-[#333]">
+                        <table class="w-full text-left text-[11px] uppercase tracking-wider">
+                            <tr class="bg-[#111] text-white border-b border-[#333]">
+                                <th class="p-4">Tier</th>
+                                <th class="p-4">Permission</th>
+                                <th class="p-4">Availability</th>
+                            </tr>
+                            <tr class="border-b border-[#333]">
+                                <td class="p-4">Visitor</td>
+                                <td class="p-4">Visual HUD Observation</td>
+                                <td class="p-4 text-[#39FF14]">Unrestricted</td>
+                            </tr>
+                            <tr class="border-b border-[#333]">
+                                <td class="p-4">Engineer</td>
+                                <td class="p-4">3D Chassis Interaction</td>
+                                <td class="p-4 text-[#39FF14]">Unrestricted</td>
+                            </tr>
+                            <tr class="border-b border-[#333]">
+                                <td class="p-4">Analyst</td>
+                                <td class="p-4">Archive Decryption</td>
+                                <td class="p-4 text-red-600">Classified</td>
+                            </tr>
+                        </table>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="flex items-center gap-4 mb-10">
+                        <span class="text-red-600 text-lg">04/</span>
+                        <h2 class="text-white text-5xl heading-font uppercase">Limit of Responsibility</h2>
+                    </div>
+                    <div class="space-y-6 text-sm leading-relaxed">
+                        <p>Grid Zero provides high-performance data visualizations but does not guarantee 100% accuracy of F1 telemetry during live events. We are not liable for any "Strategy Errors" made by users who rely on our simulations for real-world fantasy racing or betting.</p>
+                        <p class="uppercase tracking-tighter text-gray-600">THE SYSTEM IS PROVIDED 'AS-IS' WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.</p>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <section class="mt-40 pt-20 border-t border-red-600 text-center">
+            <h3 class="heading-font text-6xl text-white uppercase mb-4">Acknowledge Mandate</h3>
+            <p class="font-mono text-[10px] tracking-[1em] text-gray-700 mb-12 uppercase">Connection will be maintained upon acceptance</p>
+            <div class="flex justify-center gap-4">
+                <a href="index.html" class="bg-red-600 text-white px-12 py-5 text-xs font-bold uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all">
+                    I Accept & Proceed
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-black pt-20 pb-12 px-6 border-t-2 border-red-600">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-700 uppercase tracking-[0.4em]">
+            <div>&copy; 2026 GRID ZERO SYSTEMS. // SECURITY_CORE_REDUNDANT</div>
+            <div class="flex gap-12 mt-8 md:mt-0">
+                <a href="privacy.html" class="hover:text-white transition-colors">Privacy Protocol</a>
+                <span class="text-white">Terms of Service</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

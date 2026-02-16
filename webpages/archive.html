@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRID ZERO | CLASSIFIED_ARCHIVE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* BLUEPRINT FX */
+        .blueprint-mode {
+            filter: invert(1) grayscale(1) contrast(1.5) brightness(0.8);
+            mix-blend-mode: luminosity;
+        }
+        
+        /* CARD HOVER */
+        .archive-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid #222; }
+        .archive-card:hover { transform: translateY(-5px); border-color: #39FF14; box-shadow: 0 10px 30px -10px rgba(57, 255, 20, 0.15); }
+
+        /* SEARCH INPUT */
+        .tech-input {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid #333;
+            transition: all 0.3s;
+        }
+        .tech-input:focus {
+            border-color: #39FF14;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.1);
+            outline: none;
+        }
+    </style>
+</head>
+<body class="bg-[#050505] text-gray-400 selection:bg-[#39FF14] selection:text-black font-mono">
+
+    <div class="bg-grain"></div>
+
+    <header class="fixed top-0 w-full z-50 border-b border-[#333] bg-[#050505]/90 backdrop-blur-md px-6 py-3 flex justify-between items-center text-[10px] tracking-widest uppercase">
+        <div class="flex gap-6 items-center">
+            <div class="w-3 h-3 bg-[#39FF14] animate-pulse"></div>
+            <a href="index.html" class="text-white font-bold hover:text-[#39FF14] transition-colors">GRID ZERO</a>
+            <span class="hidden md:inline text-gray-600">/// SECTOR: ARCHIVE_VAULT</span>
+        </div>
+        <div class="flex gap-4">
+            <a href="live.html" class="hover:text-white transition-colors">LIVE TIMING</a>
+            <div id="clock" class="text-white font-bold tabular-nums">00:00:00</div>
+        </div>
+    </header>
+
+    <section class="pt-32 pb-12 px-6 border-b border-[#222]">
+        <div class="max-w-7xl mx-auto">
+            <p class="text-[#39FF14] text-xs mb-4 font-mono tracking-[0.5em] uppercase">/// RESTRICTED_ACCESS_LEVEL_5</p>
+            <h1 class="text-6xl md:text-9xl heading-font uppercase text-white leading-none mb-8">Legacy<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-gray-700 to-gray-900">Archive</span></h1>
+            
+            <div class="flex flex-col md:flex-row gap-6 items-end justify-between mt-12">
+                
+                <div class="flex gap-4 w-full md:w-auto">
+                    <input type="text" id="searchInput" placeholder="> SEARCH_CHASSIS_ID..." class="tech-input h-12 px-4 w-64 text-xs font-mono text-[#39FF14] placeholder-gray-700">
+                    
+                    <select id="eraFilter" class="tech-input h-12 px-4 text-xs font-mono text-gray-400 cursor-pointer">
+                        <option value="all">ALL ERAS</option>
+                        <option value="hybrid">HYBRID ERA (2014-24)</option>
+                        <option value="v8">V8 ERA (2006-13)</option>
+                    </select>
+                </div>
+
+                <div class="flex items-center gap-3 border border-[#333] px-4 py-3 bg-[#0a0a0a]">
+                    <span class="text-[9px] uppercase font-bold text-gray-500">Blueprint Mode</span>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="blueprintToggle" class="sr-only peer">
+                        <div class="w-9 h-5 bg-gray-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#39FF14]"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="max-w-7xl mx-auto px-6 py-20">
+        <div id="archive-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            </div>
+    </main>
+
+    <footer class="bg-black pt-20 pb-12 px-6 border-t-2 border-[#39FF14]">
+        <div class="max-w-7xl mx-auto flex justify-between items-center text-[10px] text-gray-600 uppercase tracking-widest">
+            <div>&copy; 2026 GRID ZERO SYSTEMS.</div>
+            <a href="index.html" class="hover:text-white transition-colors">Return to Base</a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // 1. EXPANDED DATABASE
+        const cars = [
+            {
+                id: "RB20",
+                year: "2024",
+                era: "hybrid",
+                driver: "Verstappen / Perez",
+                wins: 7,
+                poles: 8,
+                points: "389",
+                image: "https://github.com/ShreyanshGupta205/Grid-Zero/blob/main/image/rb20.png?raw=true",
+                desc: "The Evolution. Radical 'Zero Pod' inlets and cannon cooling ducts.",
+                dom: 85,
+                tech: { engine: "Honda RBPTH002", weight: "798 KG", gear: "8-Speed", fuel: "Esso" }
+            },
+            {
+                id: "RB19",
+                year: "2023",
+                era: "hybrid",
+                driver: "Verstappen / Perez",
+                wins: 21,
+                poles: 14,
+                points: "860",
+                image: "https://github.com/ShreyanshGupta205/Grid-Zero/blob/main/image/rb19.png?raw=true",
+                desc: "Perfection. The most statistically dominant car in F1 history (95% win rate).",
+                dom: 99,
+                tech: { engine: "Honda RBPTH001", weight: "798 KG", gear: "8-Speed", fuel: "Esso" }
+            },
+            {
+                id: "RB18",
+                year: "2022",
+                era: "hybrid",
+                driver: "Verstappen / Perez",
+                wins: 17,
+                poles: 8,
+                points: "759",
+                image: "https://github.com/ShreyanshGupta205/Grid-Zero/blob/main/image/rb18.png?raw=true",
+                desc: "The Ground Effect Master. Stable aero platform while rivals porpoised.",
+                dom: 90,
+                tech: { engine: "Red Bull RBPTH001", weight: "798 KG", gear: "8-Speed", fuel: "Esso" }
+            },
+            {
+                id: "RB16B",
+                year: "2021",
+                era: "hybrid",
+                driver: "Verstappen / Perez",
+                wins: 11,
+                poles: 10,
+                points: "585.5",
+                image: "https://github.com/ShreyanshGupta205/Grid-Zero/blob/main/image/rb16b.png?raw=true",
+                desc: "The Challenger. High-rake concept peak. Ended Mercedes' dynasty.",
+                dom: 75,
+                tech: { engine: "Honda RA621H", weight: "752 KG", gear: "8-Speed", fuel: "Esso" }
+            },
+            {
+                id: "RB9",
+                year: "2013",
+                era: "v8",
+                driver: "Vettel / Webber",
+                wins: 13,
+                poles: 11,
+                points: "596",
+                image: "https://github.com/ShreyanshGupta205/Grid-Zero/blob/main/image/RB9.png?raw=true",
+                desc: "The V8 Swan Song. 9 consecutive wins. Coanda exhaust sealing.",
+                dom: 92,
+                tech: { engine: "Renault RS27-2013", weight: "642 KG", gear: "7-Speed", fuel: "Total" }
+            },
+            {
+                id: "RB6",
+                year: "2010",
+                era: "v8",
+                driver: "Vettel / Webber",
+                wins: 9,
+                poles: 15,
+                points: "498",
+                image: "https://github.com/ShreyanshGupta205/Grid-Zero/blob/main/image/RB6.png?raw=true",
+                desc: "The First Champion. Blown Diffuser pioneer. Started the dynasty.",
+                dom: 60,
+                tech: { engine: "Renault RS27-2010", weight: "620 KG", gear: "7-Speed", fuel: "Total" }
+            }
+        ];
+
+        const grid = document.getElementById('archive-grid');
+        const searchInput = document.getElementById('searchInput');
+        const eraFilter = document.getElementById('eraFilter');
+        const blueprintToggle = document.getElementById('blueprintToggle');
+
+        // 2. RENDER FUNCTION
+        function renderCars(filterText = "", filterEra = "all") {
+            grid.innerHTML = "";
+            
+            const filtered = cars.filter(car => {
+                const matchesText = car.id.toLowerCase().includes(filterText.toLowerCase()) || 
+                                  car.desc.toLowerCase().includes(filterText.toLowerCase());
+                const matchesEra = filterEra === "all" || car.era === filterEra;
+                return matchesText && matchesEra;
+            });
+
+            filtered.forEach(car => {
+                const card = document.createElement('div');
+                card.className = "archive-card bg-[#0a0a0a] group relative overflow-hidden h-[500px] flex flex-col"; // Increased height slightly
+                
+                card.innerHTML = `
+                    <div class="h-[250px] relative overflow-hidden bg-gradient-to-b from-[#111] to-[#0a0a0a] p-4 flex items-center justify-center">
+                        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/grid-me.png')] opacity-10"></div>
+                        <img src="${car.image}" class="car-img w-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500 scale-90 group-hover:scale-105 drop-shadow-2xl">
+                        <div class="absolute top-4 right-4 border border-[#333] px-2 py-1 bg-black/50 text-[9px] font-mono text-[#39FF14]">${car.year}</div>
+                        <div class="absolute top-4 left-4 text-[9px] text-gray-600 font-bold uppercase tracking-widest">Chassis_ID: ${car.id}</div>
+                    </div>
+                    
+                    <div class="p-6 flex-1 flex flex-col justify-between border-t border-[#222] bg-[#080808] group-hover:bg-[#0c0c0c] transition-colors">
+                        
+                        <div class="mb-4">
+                            <div class="flex justify-between items-end mb-2">
+                                <h3 class="text-3xl text-white heading-font uppercase italic">${car.id}</h3>
+                                <div class="text-right">
+                                    <span class="block text-[12px] text-white font-bold">${car.wins} WINS</span>
+                                    <span class="block text-[9px] text-gray-500">${car.poles} POLES</span>
+                                </div>
+                            </div>
+                            <p class="text-[10px] text-gray-500 leading-relaxed h-8 overflow-hidden text-ellipsis">${car.desc}</p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2 text-[9px] font-mono text-gray-400 border-t border-b border-[#222] py-3 mb-3">
+                            <div class="flex justify-between">
+                                <span>PU:</span> <span class="text-white">${car.tech.engine}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>WGT:</span> <span class="text-white">${car.tech.weight}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>BOX:</span> <span class="text-white">${car.tech.gear}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>FUEL:</span> <span class="text-white">${car.tech.fuel}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between text-[9px] uppercase font-bold text-gray-600 mb-1">
+                                    <span>Dominance Index</span>
+                                    <span class="text-white">${car.dom}%</span>
+                                </div>
+                                <div class="w-full h-1 bg-[#222]">
+                                    <div class="h-full bg-[#39FF14]" style="width: ${car.dom}%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="pt-2 flex justify-between items-center opacity-50 group-hover:opacity-100 transition-opacity">
+                                <span class="text-[9px] font-mono text-[#39FF14]">> ACCESS_FULL_LOG</span>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-white"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // 3. EVENT LISTENERS
+        searchInput.addEventListener('input', (e) => renderCars(e.target.value, eraFilter.value));
+        eraFilter.addEventListener('change', (e) => renderCars(searchInput.value, e.target.value));
+
+        blueprintToggle.addEventListener('change', (e) => {
+            const images = document.querySelectorAll('.car-img');
+            images.forEach(img => {
+                if(e.target.checked) {
+                    img.classList.add('blueprint-mode');
+                } else {
+                    img.classList.remove('blueprint-mode');
+                }
+            });
+        });
+
+        // INIT
+        renderCars();
+
+    </script>
+</body>
+</html>

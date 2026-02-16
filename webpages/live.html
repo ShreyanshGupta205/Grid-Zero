@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRID ZERO | COMMAND_CENTER</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #050505; --panel: #0a0a0a; --border: #222; --neon: #39FF14; }
+        body { background-color: var(--bg); color: #ccc; font-family: 'JetBrains Mono', monospace; overflow: hidden; }
+        .heading-font { font-family: 'Oswald', sans-serif; }
+        
+        /* SCROLLBAR */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #333; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--neon); }
+
+        /* TABLE INTERACTION */
+        .row-select { background: #111; border-left: 3px solid var(--neon); }
+        .row-hover:hover { background: #0f0f0f; cursor: pointer; }
+        
+        /* HIGHLIGHT FX */
+        .dimmed { opacity: 0.3; filter: grayscale(100%); transition: all 0.3s; }
+        .highlighted { opacity: 1; z-index: 50; filter: drop-shadow(0 0 8px white); transition: all 0.3s; }
+    </style>
+</head>
+<body class="h-screen w-screen flex flex-col selection:bg-white selection:text-black">
+
+    <header class="h-14 border-b border-[#222] bg-[#080808] flex items-center justify-between px-6 z-50">
+        <div class="flex items-center gap-6">
+            <div class="flex items-center gap-2 px-3 py-1 bg-red-900/30 border border-red-600 rounded">
+                <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+                <span class="text-red-500 font-bold text-xs tracking-[0.2em]">LIVE SESSION</span>
+            </div>
+            <div class="h-8 w-[1px] bg-[#222]"></div>
+            <div>
+                <h1 class="text-white font-bold text-lg heading-font tracking-wide">ITALIAN GP</h1>
+                <p class="text-[9px] text-gray-500 font-bold">MONZA // 53 LAPS</p>
+            </div>
+        </div>
+        
+        <div class="hidden md:flex gap-8 text-[10px] font-bold text-gray-500">
+            <div class="flex flex-col items-center"><span class="text-white text-lg leading-none">28°C</span><span>AIR</span></div>
+            <div class="flex flex-col items-center"><span class="text-[#39FF14] text-lg leading-none">42°C</span><span>TRACK</span></div>
+            <div class="flex flex-col items-center"><span class="text-blue-400 text-lg leading-none">12%</span><span>HUMIDITY</span></div>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <button onclick="resetFocus()" class="text-[10px] border border-[#333] px-3 py-2 hover:bg-white hover:text-black transition-colors uppercase">Reset View</button>
+            <div id="clock" class="text-xl font-bold text-white heading-font tabular-nums">00:00:00</div>
+        </div>
+    </header>
+
+    <div class="flex-1 flex overflow-hidden relative">
+
+        <aside class="w-[28%] bg-[#080808] border-r border-[#222] flex flex-col z-20">
+            <div class="grid grid-cols-12 gap-1 px-4 py-3 bg-[#111] border-b border-[#222] text-[9px] font-bold text-gray-500 uppercase tracking-wider">
+                <div class="col-span-1">Pos</div>
+                <div class="col-span-4">Driver</div>
+                <div class="col-span-3 text-right">Interval</div>
+                <div class="col-span-1 text-center">T</div>
+                <div class="col-span-3 text-center">Sector 1</div>
+            </div>
+            <div id="leaderboard" class="flex-1 overflow-y-auto"></div>
+            <div class="p-3 border-t border-[#222] bg-black flex justify-between items-center text-[10px]">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></span>
+                    <span class="text-yellow-500 font-bold">SC WINDOW: OPEN</span>
+                </div>
+                <span class="text-gray-600">TRACK CLEAR</span>
+            </div>
+        </aside>
+
+        <main class="flex-1 bg-[#050505] relative flex items-col justify-center">
+            
+            <div class="absolute top-8 left-8 z-10 pointer-events-none">
+                <div id="focus-indicator" class="opacity-0 transition-opacity duration-500">
+                    <div class="text-[#39FF14] text-xs font-bold tracking-widest mb-1">TARGET LOCKED</div>
+                    <h2 class="text-6xl text-white heading-font uppercase" id="map-target-name">VER</h2>
+                    <div class="text-2xl text-gray-500 font-mono" id="map-target-speed">320 KMH</div>
+                </div>
+            </div>
+
+            <div class="w-full h-full p-12">
+                <svg viewBox="0 0 1000 600" class="w-full h-full drop-shadow-[0_0_50px_rgba(0,0,0,0.8)]">
+                    <defs>
+                        <path id="trackPath" d="M 200,500 L 700,500 C 850,500 900,400 900,300 C 900,200 850,100 700,100 L 300,100 L 280,150 L 250,100 L 150,100 C 100,100 50,150 50,250 C 50,350 100,400 150,450 L 200,500 Z" />
+                        
+                        <g id="f1CarIcon">
+                             <path d="M 12,0 L 5,-3 L -2,-3 L -2,-6 L -8,-6 L -8,-2 L -6,-2 L -6,2 L -8,2 L -8,6 L -2,6 L -2,3 L 5,3 Z" />
+                             <path d="M 12,-4 L 14,-4 L 14,4 L 12,4 Z" />
+                             <path d="M -10,-5 L -8,-5 L -8,5 L -10,5 Z" />
+                        </g>
+                    </defs>
+
+                    <use href="#trackPath" fill="none" stroke="#222" stroke-width="40" stroke-linejoin="round" />
+                    <use href="#trackPath" fill="none" stroke="#0a0a0a" stroke-width="30" stroke-linejoin="round" />
+                    
+                    <path id="sec1" d="M 200,500 L 700,500 C 850,500 900,400 900,300" fill="none" stroke="#222" stroke-width="2" />
+                    <path id="sec2" d="M 900,300 C 900,200 850,100 700,100 L 300,100 L 280,150 L 250,100 L 150,100" fill="none" stroke="#222" stroke-width="2" />
+                    <path id="sec3" d="M 150,100 C 100,100 50,150 50,250 C 50,350 100,400 150,450 L 200,500" fill="none" stroke="#222" stroke-width="2" />
+
+                    <line x1="200" y1="480" x2="200" y2="520" stroke="white" stroke-width="3" />
+
+                    <g id="cars-layer"></g>
+
+                </svg>
+            </div>
+        </main>
+
+        <aside class="w-[25%] bg-[#080808] border-l border-[#222] flex flex-col z-20 relative">
+            
+            <div class="p-6 border-b border-[#222] bg-gradient-to-b from-[#111] to-transparent">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <div class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">Telemetry Feed</div>
+                        <h1 id="t-name" class="text-4xl text-white heading-font leading-none">VERSTAPPEN</h1>
+                    </div>
+                    <div id="t-num" class="text-3xl font-bold text-gray-700 font-mono opacity-50">1</div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-[#111] p-2 border border-[#222] rounded">
+                        <div class="text-[9px] text-gray-500 uppercase">Best Lap</div>
+                        <div id="t-time" class="text-[#39FF14] text-lg font-mono">1:21.045</div>
+                    </div>
+                    <div class="bg-[#111] p-2 border border-[#222] rounded">
+                        <div class="text-[9px] text-gray-500 uppercase">Gap to Leader</div>
+                        <div id="t-gap" class="text-white text-lg font-mono">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-1 p-6 space-y-8 overflow-y-auto">
+                <div class="flex justify-center my-4">
+                    <div class="relative w-40 h-40 rounded-full border border-[#222] bg-[#050505] flex items-center justify-center">
+                        <div class="absolute w-full h-[1px] bg-[#222]"></div>
+                        <div class="absolute h-full w-[1px] bg-[#222]"></div>
+                        <div id="g-dot" class="w-3 h-3 bg-[#39FF14] rounded-full shadow-[0_0_10px_#39FF14] transition-transform duration-100 absolute"></div>
+                        <div class="absolute bottom-2 text-[9px] text-gray-600">G-LOAD</div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between text-[10px] font-bold text-gray-500 mb-1"><span>THROTTLE</span><span id="txt-thr" class="text-white">100%</span></div>
+                        <div class="h-2 bg-[#111] rounded-full overflow-hidden border border-[#222]">
+                            <div id="bar-thr" class="h-full bg-blue-500 w-full transition-all duration-75"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-[10px] font-bold text-gray-500 mb-1"><span>BRAKE</span><span id="txt-brk" class="text-white">0%</span></div>
+                        <div class="h-2 bg-[#111] rounded-full overflow-hidden border border-[#222]">
+                            <div id="bar-brk" class="h-full bg-red-600 w-0 transition-all duration-75"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 pt-4 border-t border-[#222]">
+                    <div class="text-center">
+                        <div class="text-[9px] text-gray-600 uppercase">Speed</div>
+                        <div id="t-speed" class="text-3xl text-white heading-font">312</div>
+                    </div>
+                    <div class="text-center border-l border-[#222]">
+                        <div class="text-[9px] text-gray-600 uppercase">Gear</div>
+                        <div id="t-gear" class="text-3xl text-[#39FF14] heading-font">8</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+    </div>
+
+    <footer class="h-32 bg-[#050505] border-t border-[#222] grid grid-cols-1 md:grid-cols-4">
+        <div class="col-span-1 p-4 border-r border-[#222] flex flex-col justify-center">
+            <h3 class="text-white text-xs font-bold uppercase mb-2">Race Control</h3>
+            <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                <span class="text-xs text-gray-400">SYSTEM OPTIMAL</span>
+            </div>
+        </div>
+        <div class="col-span-3 p-2 overflow-hidden bg-black relative">
+            <div id="race-log" class="mt-4 space-y-1 font-mono text-[10px] h-full overflow-y-auto pb-4"></div>
+        </div>
+    </footer>
+
+    <script>
+        const drivers = [
+            { id: "VER", name: "Verstappen", team: "Red Bull", color: "#1e41ff", num: 1, gap: "-", tyre: "S" },
+            { id: "NOR", name: "Norris", team: "McLaren", color: "#ff8000", num: 4, gap: "+0.890", tyre: "M" },
+            { id: "LEC", name: "Leclerc", team: "Ferrari", color: "#ff0000", num: 16, gap: "+1.200", tyre: "S" },
+            { id: "HAM", name: "Hamilton", team: "Mercedes", color: "#00d2be", num: 44, gap: "+1.540", tyre: "H" },
+            { id: "PIA", name: "Piastri", team: "McLaren", color: "#ff8000", num: 81, gap: "+1.900", tyre: "M" },
+            { id: "SAI", name: "Sainz", team: "Ferrari", color: "#ff0000", num: 55, gap: "+2.100", tyre: "S" },
+            { id: "RUS", name: "Russell", team: "Mercedes", color: "#00d2be", num: 63, gap: "+2.500", tyre: "H" },
+            { id: "ALO", name: "Alonso", team: "Aston Martin", color: "#006f62", num: 14, gap: "+3.000", tyre: "M" },
+            { id: "PER", name: "Perez", team: "Red Bull", color: "#1e41ff", num: 11, gap: "+3.200", tyre: "S" },
+            { id: "ALB", name: "Albon", team: "Williams", color: "#005aff", num: 23, gap: "+4.000", tyre: "S" }
+        ];
+
+        let selectedIdx = 0;
+
+        function init() {
+            renderLeaderboard();
+            renderCars();
+            selectDriver(0);
+            startClock();
+            startSimulation();
+        }
+
+        function renderLeaderboard() {
+            const board = document.getElementById('leaderboard');
+            board.innerHTML = "";
+            drivers.forEach((d, i) => {
+                const row = document.createElement('div');
+                row.className = `grid grid-cols-12 gap-1 px-4 py-3 border-b border-[#222] items-center row-hover transition-all text-[10px] ${i===selectedIdx ? 'row-select' : ''}`;
+                row.onclick = () => selectDriver(i);
+                row.innerHTML = `
+                    <div class="col-span-1 text-white font-bold">${i+1}</div>
+                    <div class="col-span-4">
+                        <div class="text-white font-bold tracking-wide">${d.name.toUpperCase()}</div>
+                        <div class="text-[8px] text-gray-600">${d.team}</div>
+                    </div>
+                    <div class="col-span-3 text-right font-mono text-[#39FF14]">${d.gap}</div>
+                    <div class="col-span-1 text-center"><span class="text-white font-bold border border-[#333] px-1 rounded bg-[#111] ${d.tyre === 'S' ? 'text-red-500' : d.tyre === 'M' ? 'text-yellow-500' : 'text-white'}">${d.tyre}</span></div>
+                    <div class="col-span-3 text-center flex justify-center gap-[2px]">
+                        <div class="w-full h-2 bg-purple-500 rounded-sm"></div>
+                    </div>
+                `;
+                board.appendChild(row);
+            });
+        }
+
+        function renderCars() {
+            const layer = document.getElementById('cars-layer');
+            layer.innerHTML = "";
+            drivers.forEach((d, i) => {
+                const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+                g.id = `car-group-${i}`;
+                
+                // USE NEW F1 CAR SHAPE
+                const shape = document.createElementNS("http://www.w3.org/2000/svg", "use");
+                shape.setAttribute("href", "#f1CarIcon");
+                shape.setAttribute("fill", d.color);
+                shape.setAttribute("stroke", "white");
+                shape.setAttribute("stroke-width", "0.5");
+                shape.setAttribute("transform", "scale(1.5)"); // Better Size
+
+                const anim = document.createElementNS("http://www.w3.org/2000/svg", "animateMotion");
+                anim.setAttribute("dur", (14 + Math.random()*3) + "s");
+                anim.setAttribute("repeatCount", "indefinite");
+                anim.setAttribute("rotate", "auto");
+                anim.setAttribute("begin", -(i * 1.5) + "s");
+
+                const mpath = document.createElementNS("http://www.w3.org/2000/svg", "mpath");
+                mpath.setAttribute("href", "#trackPath");
+
+                anim.appendChild(mpath);
+                g.appendChild(anim);
+                g.appendChild(shape);
+                layer.appendChild(g);
+            });
+        }
+
+        function selectDriver(i) {
+            selectedIdx = i;
+            renderLeaderboard();
+            const d = drivers[i];
+
+            document.getElementById('t-name').innerText = d.name.toUpperCase();
+            document.getElementById('t-num').innerText = d.num;
+            document.getElementById('t-gap').innerText = d.gap;
+            document.getElementById('focus-indicator').style.opacity = "1";
+            document.getElementById('map-target-name').innerText = d.id;
+            document.getElementById('map-target-name').style.color = d.color;
+
+            drivers.forEach((_, idx) => {
+                const car = document.getElementById(`car-group-${idx}`);
+                if(idx === i) {
+                    car.classList.remove('dimmed');
+                    car.classList.add('highlighted');
+                } else {
+                    car.classList.remove('highlighted');
+                    car.classList.add('dimmed');
+                }
+            });
+        }
+
+        function resetFocus() {
+            document.getElementById('focus-indicator').style.opacity = "0";
+            selectedIdx = -1;
+            renderLeaderboard();
+            drivers.forEach((_, idx) => {
+                const car = document.getElementById(`car-group-${idx}`);
+                car.classList.remove('dimmed', 'highlighted');
+            });
+        }
+
+        let speed = 0;
+        function startSimulation() {
+            setInterval(() => {
+                if(Math.random() > 0.05) speed = Math.min(340, speed + 5);
+                else speed = Math.max(60, speed - 30);
+
+                document.getElementById('t-speed').innerText = Math.floor(speed);
+                document.getElementById('map-target-speed').innerText = Math.floor(speed) + " KMH";
+                
+                const throttle = document.getElementById('bar-thr');
+                const brake = document.getElementById('bar-brk');
+                const gear = document.getElementById('t-gear');
+                const txtThr = document.getElementById('txt-thr');
+                const txtBrk = document.getElementById('txt-brk');
+
+                if(speed > 280) {
+                    throttle.style.width = "100%"; txtThr.innerText = "100%";
+                    brake.style.width = "0%"; txtBrk.innerText = "0%";
+                    gear.innerText = "8"; gear.style.color = "#39FF14";
+                    moveG(0, 5); 
+                } else if (speed < 120) {
+                    throttle.style.width = "0%"; txtThr.innerText = "0%";
+                    brake.style.width = "90%"; txtBrk.innerText = "90%";
+                    gear.innerText = "2"; gear.style.color = "red";
+                    moveG(0, -15);
+                } else {
+                    throttle.style.width = "60%"; txtThr.innerText = "60%";
+                    brake.style.width = "0%"; txtBrk.innerText = "0%";
+                    gear.innerText = Math.floor(speed/40) + 1; gear.style.color = "white";
+                    moveG((Math.random()-0.5)*30, 0);
+                }
+
+                if(Math.random() > 0.95) document.getElementById('sec1').setAttribute("stroke", getRandomColor());
+                if(Math.random() > 0.95) document.getElementById('sec2').setAttribute("stroke", getRandomColor());
+
+            }, 100);
+
+            setInterval(() => {
+                const messages = [
+                    { t: "YELLOW FLAG SECTOR 2", c: "text-yellow-500" },
+                    { t: "GREEN FLAG", c: "text-green-500" },
+                    { t: "VER PURPLE SECTOR 1", c: "text-purple-500" },
+                    { t: "HAM PERSONAL BEST", c: "text-green-500" },
+                    { t: "TRACK LIMITS TURN 4", c: "text-white" }
+                ];
+                const msg = messages[Math.floor(Math.random() * messages.length)];
+                const log = document.getElementById('race-log');
+                const time = new Date().toLocaleTimeString('en-GB');
+                const line = document.createElement('div');
+                line.className = `border-l-2 border-[#333] pl-2 ${msg.c}`;
+                line.innerText = `[${time}] ${msg.t}`;
+                log.prepend(line);
+            }, 3000);
+        }
+
+        function moveG(x, y) {
+            document.getElementById('g-dot').style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        function getRandomColor() {
+            const r = Math.random();
+            if(r > 0.6) return "#39FF14"; 
+            if(r > 0.3) return "#FCD700"; 
+            return "#d946ef"; 
+        }
+
+        function startClock() {
+            setInterval(() => {
+                document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-GB');
+            }, 1000);
+        }
+
+        init();
+    </script>
+</body>
+</html>

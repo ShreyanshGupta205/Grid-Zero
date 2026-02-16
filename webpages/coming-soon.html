@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRID ZERO | SYSTEM_OVERRIDE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --neon: #39FF14; --bg: #000000; }
+        body { background-color: var(--bg); color: #ccc; font-family: 'JetBrains Mono', monospace; overflow: hidden; }
+        .heading-font { font-family: 'Oswald', sans-serif; }
+
+        /* 1. ANIMATED RADAR SCANNER */
+        .radar {
+            width: 150px; height: 150px; border-radius: 50%;
+            border: 1px solid rgba(57, 255, 20, 0.2);
+            position: absolute; top: -50px; right: -50px;
+        }
+        .radar::after {
+            content: ''; position: absolute; width: 100%; height: 100%;
+            background: conic-gradient(from 0deg, var(--neon) 0deg, transparent 90deg);
+            border-radius: 50%; animation: scan 4s linear infinite; opacity: 0.3;
+        }
+        @keyframes scan { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* 2. TELEMETRY EQUALIZER */
+        .eq-bar { width: 3px; background: var(--neon); animation: eq 0.5s ease-in-out infinite alternate; }
+        @keyframes eq { 0% { height: 5px; } 100% { height: 25px; } }
+
+        /* 3. CENTER GLOW PILL */
+        .main-card {
+            background: radial-gradient(circle at center, rgba(57, 255, 20, 0.05) 0%, transparent 70%);
+            border: 1px solid rgba(57, 255, 20, 0.1);
+            backdrop-filter: blur(20px);
+        }
+
+        /* 4. DYNAMIC TEXT GLOW */
+        .coming-soon-text {
+            color: white;
+            letter-spacing: 0.2em;
+            text-shadow: 0 0 20px rgba(255,255,255,0.1);
+            animation: breathe 3s ease-in-out infinite;
+        }
+        @keyframes breathe { 
+            0%, 100% { opacity: 0.5; filter: blur(2px); }
+            50% { opacity: 1; filter: blur(0px); text-shadow: 0 0 30px var(--neon); }
+        }
+
+        /* 5. MOUSE TRACKING DOT */
+        #cursor-glow {
+            position: fixed; pointer-events: none; width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(57, 255, 20, 0.08) 0%, transparent 70%);
+            transform: translate(-50%, -50%); z-index: 1; transition: transform 0.1s ease-out;
+        }
+
+        .cyber-btn {
+            background: linear-gradient(90deg, #111, #000);
+            border: 1px solid #333;
+            transition: 0.3s;
+        }
+        .cyber-btn:hover {
+            border-color: var(--neon);
+            color: var(--neon);
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center h-screen w-screen overflow-hidden bg-black">
+
+    <div id="cursor-glow"></div>
+    <div class="radar"></div>
+
+    <div class="absolute inset-0 z-0 opacity-10 pointer-events-none select-none overflow-hidden flex flex-wrap gap-12 p-8 text-[10px]">
+        <script>
+            for(let i=0; i<20; i++) {
+                document.write(`<div class="flex flex-col">${Math.random().toString(16)}<br>${Math.random().toString(16)}</div>`);
+            }
+        </script>
+    </div>
+
+    <main class="relative z-10 w-full max-w-5xl p-12 main-card rounded-2xl border border-white/5">
+        
+        <div class="absolute top-4 left-4 border-l-2 border-t-2 border-white/20 w-8 h-8"></div>
+        <div class="absolute bottom-4 right-4 border-r-2 border-b-2 border-white/20 w-8 h-8"></div>
+
+        <div class="flex flex-col md:flex-row gap-12 items-center">
+            
+            <div class="w-full md:w-1/3 text-left space-y-8">
+                <div>
+                    <div class="text-[10px] text-gray-500 uppercase tracking-[0.4em] mb-2">Registry: 29.0X</div>
+                    <h2 class="text-4xl heading-font text-white uppercase italic">Grid<br><span class="text-[#39FF14]">Zero</span></h2>
+                </div>
+
+                <div class="flex items-end gap-1 h-10">
+                    <div class="eq-bar" style="animation-delay: 0.1s"></div>
+                    <div class="eq-bar" style="animation-delay: 0.3s"></div>
+                    <div class="eq-bar" style="animation-delay: 0.2s"></div>
+                    <div class="eq-bar" style="animation-delay: 0.5s"></div>
+                    <div class="eq-bar" style="animation-delay: 0.1s"></div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex justify-between border-b border-white/5 pb-2">
+                        <span class="text-[9px] text-gray-600">ENCRYPTION</span>
+                        <span class="text-[9px] text-white">AES-256</span>
+                    </div>
+                    <div class="flex justify-between border-b border-white/5 pb-2">
+                        <span class="text-[9px] text-gray-600">STABILITY</span>
+                        <span class="text-[9px] text-[#39FF14]">99.9%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full md:w-2/3 space-y-12">
+                <div class="space-y-2">
+                    <h1 class="text-5xl md:text-8xl heading-font uppercase leading-none coming-soon-text">
+                        Coming Soon
+                    </h1>
+                    <p class="text-xs text-gray-400 font-mono tracking-widest uppercase">
+                        /// Initializing High-Performance Telemetry Hub
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-4 gap-4">
+                    <div class="bg-white/5 p-4 rounded">
+                        <div id="days" class="text-2xl md:text-4xl text-white heading-font">00</div>
+                        <div class="text-[8px] text-gray-600 uppercase mt-1">Days</div>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded">
+                        <div id="hours" class="text-2xl md:text-4xl text-white heading-font">00</div>
+                        <div class="text-[8px] text-gray-600 uppercase mt-1">Hours</div>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded">
+                        <div id="minutes" class="text-2xl md:text-4xl text-white heading-font">00</div>
+                        <div class="text-[8px] text-gray-600 uppercase mt-1">Mins</div>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded">
+                        <div id="seconds" class="text-2xl md:text-4xl text-[#39FF14] heading-font">00</div>
+                        <div class="text-[8px] text-gray-600 uppercase mt-1">Secs</div>
+                    </div>
+                </div>
+
+                <form onsubmit="joinWaitlist(event)" class="relative max-w-md">
+                    <input type="email" required placeholder="REQUEST_EARLY_ACCESS_KEY..." 
+                           class="w-full bg-black/50 border border-white/10 h-12 px-6 text-xs text-[#39FF14] font-mono tracking-widest uppercase focus:border-[#39FF14] focus:outline-none transition-all rounded-lg">
+                    <button type="submit" class="absolute right-2 top-2 h-8 px-4 bg-[#39FF14] text-black text-[10px] font-bold uppercase hover:bg-white transition-colors rounded">
+                        Enter
+                    </button>
+                    <p id="success-msg" class="hidden text-left text-[9px] text-[#39FF14] mt-2 tracking-widest uppercase animate-pulse">
+                        /// Uplink Ready. Check your comms soon.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <div class="absolute bottom-8 flex gap-12 text-[9px] text-gray-700 tracking-[0.5em] uppercase">
+        <a href="index.html" class="hover:text-white transition-colors">[Bypass Protocol]</a>
+        <span>Milton Keynes // UK</span>
+        <span>© 2026 Grid Zero</span>
+    </div>
+
+    <script>
+        // 1. MOUSE GLOW
+        const glow = document.getElementById('cursor-glow');
+        window.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+
+        // 2. TIMER ENGINE
+        const launchDate = new Date();
+        launchDate.setDate(launchDate.getDate() + 14); 
+
+        function updateTimer() {
+            const now = new Date().getTime();
+            const distance = launchDate - now;
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = d < 10 ? "0" + d : d;
+            document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
+            document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
+            document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
+        }
+        setInterval(updateTimer, 1000);
+
+        // 3. FORM HANDLER
+        function joinWaitlist(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const input = e.target.querySelector('input');
+            const msg = document.getElementById('success-msg');
+
+            btn.innerText = "LINKING...";
+            setTimeout(() => {
+                btn.innerText = "OK";
+                input.value = "ACCESS_CODE_SENT";
+                input.disabled = true;
+                msg.classList.remove('hidden');
+            }, 1200);
+        }
+    </script>
+</body>
+</html>
