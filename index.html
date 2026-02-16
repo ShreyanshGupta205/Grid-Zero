@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRID ZERO | SYSTEM V.12.0 | COMPLETE</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;400;700;800&family=Oswald:wght@200;400;500;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="bg-grain"></div>
+   
+    <div id="loader">
+        <div class="f1-loader-container">
+            <svg viewBox="0 0 300 100" class="w-full h-full">
+                <path d="M 0,60 L 100,60" stroke="#333" stroke-width="2" stroke-dasharray="10,5" />
+                <path d="M 20,75 L 150,75" stroke="#333" stroke-width="2" stroke-dasharray="20,10" />
+                <g transform="translate(50, 20) scale(0.8)">
+                    <rect x="0" y="10" width="20" height="40" fill="#061922" />
+                    <path d="M 20,40 L 180,40 L 220,50 L 250,50 L 240,65 L 20,65 Z" fill="#061922" />
+                    <path d="M 40,40 L 120,40 L 110,25 Z" fill="#FF0044" />
+                    <path d="M 220,50 L 260,55 L 220,60 Z" fill="#FCD700" />
+                    <rect x="230" y="60" width="40" height="5" fill="#333" />
+                    <circle cx="40" cy="65" r="18" fill="#111" stroke="#FF0044" stroke-width="2" />
+                    <circle cx="200" cy="65" r="18" fill="#111" stroke="#FF0044" stroke-width="2" />
+                    <path d="M 130,40 Q 150,20 170,40" fill="none" stroke="#333" stroke-width="3" />
+                </g>
+            </svg>
+            <div class="speed-trail"></div>
+        </div>
+    </div>
+
+    <header class="fixed top-0 w-full z-50 border-b border-[#333] bg-[#050505]/90 backdrop-blur-md px-6 py-3 flex justify-between items-center text-[10px] tracking-widest uppercase">
+        <div class="flex gap-6 items-center">
+            <div class="w-3 h-3 bg-[#39FF14] animate-pulse"></div>
+            <span class="text-white font-bold">GRID ZERO</span>
+            <span class="hidden md:inline text-gray-500">/// SYNC_MODE: AUTO</span>
+        </div>
+        <div class="flex gap-8 text-gray-400">
+            <span class="hidden md:inline hover:text-white cursor-pointer">Data</span>
+            <span class="hidden md:inline hover:text-white cursor-pointer">Shop</span>
+            <span class="hidden md:inline hover:text-white cursor-pointer">Intel</span>
+            <span id="clock" class="text-white font-bold tabular-nums">00:00:00</span>
+        </div>
+    </header>
+
+    <section class="relative w-full h-screen overflow-hidden flex flex-col justify-center items-center text-center border-b border-[#333]">
+        
+        <div class="video-background">
+            <div class="video-foreground">
+                <iframe 
+                    src="https://www.youtube.com/embed/1v1W-ji-IbI?autoplay=1&mute=1&loop=1&playlist=1v1W-ji-IbI&controls=0&showinfo=0&rel=0&enablejsapi=1&iv_load_policy=3" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+        
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content relative z-10 mt-10">
+            <p class="text-[#39FF14] text-xs tracking-[0.8em] mb-6 animate-pulse font-mono uppercase">/// ITALIAN GP WEEKEND</p>
+            <h1 class="text-[15vw] leading-[0.8] font-bold uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-gray-300 to-black mix-blend-difference">
+                Grid<br>Zero
+            </h1>
+            
+            <div class="mt-12 flex flex-col md:flex-row gap-0 border border-[#333] bg-black/50 backdrop-blur-sm">
+                <button onclick="document.getElementById('lab-section').scrollIntoView({behavior: 'smooth'})" class="w-48 py-4 text-xs uppercase tracking-widest text-white hover:bg-[#39FF14] hover:text-black transition-colors border-b md:border-b-0 md:border-r border-[#333]">
+                    Enter Lab
+                </button>
+                <button class="w-48 py-4 text-xs uppercase tracking-widest text-white hover:bg-white hover:text-black transition-colors">
+                    View Telemetry
+                </button>
+            </div>
+        </div>
+
+        <div class="absolute bottom-0 w-full border-t border-[#333] py-2 bg-black/80 backdrop-blur-md overflow-hidden z-20">
+            <div class="animate-ticker text-[#39FF14] font-bold text-lg uppercase tracking-widest opacity-80">
+                 /// SYSTEM OPTIMAL /// TYRE TEMPS CRITICAL /// BOX THIS LAP /// PUSH HARD /// NO RISK NO REWARD /// SECTOR 2 YELLOW FLAG /// SYSTEM OPTIMAL /// TYRE TEMPS CRITICAL ///
+            </div>
+        </div>
+    </section>
+
+    <section id="lab-section" class="lab-terminal">
+        <div class="ticker-bar">
+            <div class="ticker-content">
+                LAP 53/53 /// PUSH HARD /// NO RISK NO REWARD /// SECTOR 1 PURPLE /// ERS DEPLOYED /// GAP TO P2: +4.2s ///&nbsp;
+                LAP 53/53 /// PUSH HARD /// NO RISK NO REWARD /// SECTOR 1 PURPLE /// ERS DEPLOYED /// GAP TO P2: +4.2s ///&nbsp;
+            </div>
+        </div>
+        <div class="ui-layer">
+            <div class="panel-left">
+                <div class="header-box">
+                    <h1 class="header-title text-white">The<br>Lab</h1>
+                    <p class="header-sub">/// PROTOTYPE CHASSIS // RB-X</p>
+                </div>
+                <div class="text-[10px] text-gray-500 mt-8">
+                    <p>RENDER_ENGINE: WEBGL 2.0</p>
+                    <p>POLY_COUNT: OPTIMIZED</p>
+                    <p>STATUS: <span class="text-[#39FF14]">ONLINE</span></p>
+                </div>
+            </div>
+            <div class="panel-right">
+                <div id="data-card" class="data-card">
+                    <h3 id="part-name" class="text-2xl font-bold text-white uppercase font-['Oswald'] mb-2">SYSTEM READY</h3>
+                    <div class="h-0.5 w-full bg-[#333] mb-4 relative"><div class="absolute left-0 top-0 h-full w-1/3 bg-[#39FF14]"></div></div>
+                    <p id="part-info" class="text-xs text-gray-300 leading-relaxed font-mono">
+                        Awaiting manual input. Hover over the chassis to halt rotation. Click components to initialize scan.
+                    </p>
+                    <div class="mt-4 flex justify-between text-[10px] text-[#39FF14] font-bold">
+                        <span>TEMP: NORMAL</span>
+                        <span>LOAD: 0%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scanner-line"></div>
+        <div id="canvas-container"></div>
+        <button id="spin-btn" class="btn-spin">Manual Spin</button>
+        <div class="interaction-hint">/// HOVER TO INSPECT • CLICK TO ANALYZE ///</div>
+    </section>
+
+    <section class="grid grid-cols-1 md:grid-cols-4 border-b border-[#333]">
+        <div class="group glitch-hover h-[450px] border-r border-b border-[#333] p-8 flex flex-col justify-between cursor-pointer">
+            <div class="flex justify-between text-xs text-gray-500"><span>/// PILOT</span><span>[VER]</span></div>
+            <div class="relative">
+                <span class="heading-font text-[200px] leading-none font-bold italic text-[#111] group-hover:text-black transition-colors absolute -top-20 -left-4 z-0">1</span>
+                <h3 class="heading-font text-4xl uppercase relative z-10 group-hover:translate-x-2 transition-transform">Max<br>Verstappen</h3>
+            </div>
+            <div class="space-y-2">
+                <div class="flex justify-between text-[10px] uppercase"><span>Throttle</span><span>98%</span></div>
+                <div class="h-1 w-full bg-[#222]"><div class="h-1 bg-white w-[98%]"></div></div>
+                <div class="flex justify-between text-[10px] uppercase"><span>Brake</span><span class="text-red-500 animate-pulse">HIGH</span></div>
+                <div class="h-1 w-full bg-[#222]"><div class="h-1 bg-red-500 w-[80%]"></div></div>
+            </div>
+        </div>
+
+        <div class="md:col-span-2 h-[450px] border-r border-b border-[#333] bg-[#080808] relative overflow-hidden flex flex-col items-center justify-center font-mono">
+            <div class="absolute inset-0" style="background-image: linear-gradient(#111 1px, transparent 1px), linear-gradient(90deg, #111 1px, transparent 1px); background-size: 40px 40px;"></div>
+            <div class="relative z-10 w-full h-full flex flex-col items-center justify-center">
+                <p class="text-[#39FF14] text-xs mb-8 tracking-widest animate-pulse">/// LIVE TRACKING: 4 CARS ON TRACK</p>
+                <div class="relative w-[80%] h-[50%]">
+                    <svg viewBox="0 0 350 180" class="w-full h-full overflow-visible">
+                        <defs>
+                            <path id="monzaPath" d="M 40,140 L 220,140 C 260,140 310,140 310,100 C 310,60 260,60 220,60 L 190,60 L 180,80 L 170,60 L 120,60 C 100,60 90,80 90,95 C 90,110 80,120 70,120 L 60,120 C 30,120 20,130 40,140 Z" />
+                            <path id="carIcon" d="M-6,4 L-6,-4 L-4,-4 L-4,-2 L2,-2 L2,-4 L5,-4 L5,4 L2,4 L2,2 L-4,2 L-4,4 Z" />
+                        </defs>
+                        <use href="#monzaPath" fill="none" stroke="#222" stroke-width="6" />
+                        <use href="#monzaPath" fill="none" stroke="#555" stroke-width="2" class="track-path" />
+                        <use href="#carIcon" fill="#FF0000" stroke="black" stroke-width="0.5"><animateMotion dur="6s" repeatCount="indefinite" rotate="auto"><mpath href="#monzaPath"/></animateMotion></use>
+                        <use href="#carIcon" fill="#1e41ff" stroke="black" stroke-width="0.5"><animateMotion dur="5.8s" begin="0.5s" repeatCount="indefinite" rotate="auto"><mpath href="#monzaPath"/></animateMotion></use>
+                        <use href="#carIcon" fill="#ff8700" stroke="black" stroke-width="0.5"><animateMotion dur="6.2s" begin="1.2s" repeatCount="indefinite" rotate="auto"><mpath href="#monzaPath"/></animateMotion></use>
+                        <use href="#carIcon" fill="#00d2be" stroke="black" stroke-width="0.5"><animateMotion dur="6.1s" begin="2.5s" repeatCount="indefinite" rotate="auto"><mpath href="#monzaPath"/></animateMotion></use>
+                    </svg>
+                </div>
+                <div class="mt-8 text-center">
+                    <h2 class="text-6xl heading-font uppercase text-white tracking-tighter">MONZA</h2>
+                    <p class="text-xs text-gray-500 mt-2 font-mono tracking-widest">ITALY // 5.793 KM // 53 LAPS</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="h-[450px] border-b border-[#333] bg-black flex flex-col">
+            <div class="flex-1 p-6 border-b border-[#333] flex flex-col justify-center items-center text-center hover:bg-[#111] transition-colors"><span class="heading-font text-5xl text-[#39FF14]">31°C</span><span class="text-xs text-gray-500 mt-2">TRACK SURFACE</span></div>
+            <div class="flex-1 p-6 border-b border-[#333] flex flex-col justify-center items-center text-center hover:bg-[#111] transition-colors"><span class="heading-font text-5xl text-white">0%</span><span class="text-xs text-gray-500 mt-2">RAIN RISK</span></div>
+            <div class="flex-1 p-6 flex flex-col justify-center items-center text-center hover:bg-[#111] transition-colors"><span class="heading-font text-5xl text-red-500">C4</span><span class="text-xs text-gray-500 mt-2">SOFT COMPOUND</span></div>
+        </div>
+    </section>
+
+    <section class="flex flex-col md:flex-row min-h-[600px] border-b border-[#333]">
+        <div class="w-full md:w-1/3 p-12 border-b md:border-b-0 md:border-r border-[#333] bg-[#0a0a0a]">
+            <h2 class="text-4xl heading-font uppercase mb-6 text-[#39FF14]">Race Strategy<br>Protocol</h2>
+            <p class="text-sm text-gray-400 leading-relaxed mb-8">
+                Decision making at 200mph. Analyze the tire degradation charts and fuel loads to determine the optimal pit window.
+                <br><br>
+                Current simulation predicts a <strong class="text-white">ONE-STOP</strong> strategy is favored for Monza.
+            </p>
+            <div class="border border-[#333] p-4 text-[10px] font-mono text-gray-500">
+                <p>> INIT_STRATEGY_ENGINE</p>
+                <p>> LOADING_TIRE_MODEL_V4.2...</p>
+                <p class="text-white">> DONE.</p>
+            </div>
+        </div>
+        <div class="w-full md:w-2/3 bg-black flex flex-col">
+            <div class="border-b border-[#333] group relative overflow-hidden transition-all duration-300 hover:bg-[#111]">
+                <div class="p-8 cursor-pointer flex justify-between items-center z-10 relative">
+                    <span class="heading-font text-3xl uppercase text-white group-hover:text-[#39FF14] transition-colors">Plan A: Aggressive</span>
+                    <span class="font-mono text-xs text-gray-500 group-hover:text-white">[+] EXPAND</span>
+                </div>
+                <div class="max-h-0 overflow-hidden group-hover:max-h-60 transition-[max-height] duration-500 ease-in-out bg-[#0a0a0a]">
+                    <div class="p-8 grid grid-cols-2 gap-8 border-t border-[#333]">
+                        <div><p class="text-[10px] text-gray-500 mb-2">STINT 1</p><div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-red-600"></div><span class="text-sm font-bold">SOFT (USED)</span></div><p class="text-[10px] text-gray-600 mt-1">LAPS 1-14</p></div>
+                        <div><p class="text-[10px] text-gray-500 mb-2">STINT 2</p><div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-white"></div><span class="text-sm font-bold">HARD (NEW)</span></div><p class="text-[10px] text-gray-600 mt-1">LAPS 15-53</p></div>
+                        <div class="col-span-2 border-t border-[#333] pt-4 mt-2"><p class="text-xs text-[#39FF14] font-mono">> ENGINEER NOTE: "Push hard in Sector 2. Undercut threat from McLaren is high."</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="border-b border-[#333] group relative overflow-hidden transition-all duration-300 hover:bg-[#111]">
+                <div class="p-8 cursor-pointer flex justify-between items-center z-10 relative">
+                    <span class="heading-font text-3xl uppercase text-white group-hover:text-blue-500 transition-colors">Plan B: Conservative</span>
+                    <span class="font-mono text-xs text-gray-500 group-hover:text-white">[+] EXPAND</span>
+                </div>
+                <div class="max-h-0 overflow-hidden group-hover:max-h-60 transition-[max-height] duration-500 ease-in-out bg-[#0a0a0a]">
+                     <div class="p-8 grid grid-cols-2 gap-8 border-t border-[#333]">
+                        <div><p class="text-[10px] text-gray-500 mb-2">STINT 1</p><div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-yellow-400"></div><span class="text-sm font-bold">MEDIUM (NEW)</span></div><p class="text-[10px] text-gray-600 mt-1">LAPS 1-22</p></div>
+                        <div><p class="text-[10px] text-gray-500 mb-2">STINT 2</p><div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-white"></div><span class="text-sm font-bold">HARD (NEW)</span></div><p class="text-[10px] text-gray-600 mt-1">LAPS 23-53</p></div>
+                         <div class="col-span-2 border-t border-[#333] pt-4 mt-2"><p class="text-xs text-blue-400 font-mono">> ENGINEER NOTE: "Manage rear tires. Lift and coast into Turn 1."</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="border-b border-[#333] group relative overflow-hidden transition-all duration-300 hover:bg-[#1a0505]">
+                <div class="p-8 cursor-pointer flex justify-between items-center z-10 relative">
+                    <span class="heading-font text-3xl uppercase text-white group-hover:text-[#FF3131] transition-colors">Plan C: Safety Car</span>
+                    <span class="font-mono text-xs text-red-500 animate-pulse">/// EMERGENCY</span>
+                </div>
+                <div class="max-h-0 overflow-hidden group-hover:max-h-60 transition-[max-height] duration-500 ease-in-out bg-[#0a0a0a]">
+                     <div class="p-8 border-t border-[#333]">
+                        <div class="flex justify-between items-center mb-6">
+                             <div><p class="text-[10px] text-gray-500 mb-2">TRIGGER</p><span class="text-xl font-bold text-yellow-500">VSC / SC DEPLOYED</span></div>
+                            <div class="text-right"><p class="text-[10px] text-gray-500 mb-2">ACTION</p><span class="text-xl font-bold text-white bg-red-600 px-2">BOX OPPOSITE</span></div>
+                        </div>
+                        <div class="border-t border-[#333] pt-4"><p class="text-xs text-[#FF3131] font-mono blink">> ENGINEER NOTE: "STAY OUT. STAY OUT. Wait for Safety Car confirmation."</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-grow bg-[url('https://images.unsplash.com/photo-1534063229694-09945a6c17d4?q=80&w=2000')] bg-cover bg-center grayscale opacity-20 hover:opacity-40 transition-opacity"></div>
+        </div>
+    </section>
+    
+    <section class="border-b border-[#333] py-16 overflow-hidden">
+        <div class="px-8 mb-8 flex justify-between items-end">
+            <h2 class="text-6xl heading-font uppercase text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-800">Legacy_Archive</h2>
+            <span class="text-xs text-[#39FF14] animate-pulse">SCROLL_RIGHT >>></span>
+        </div>
+        <div class="flex overflow-x-auto gap-8 px-8 pb-8 no-scrollbar">
+            <div class="min-w-[300px] h-[400px] border border-[#333] p-6 flex flex-col justify-between hover:border-white transition-colors">
+                <span class="text-6xl heading-font text-gray-800">2021</span>
+                <div><h4 class="text-xl font-bold uppercase mb-2">The Last Lap</h4><p class="text-xs text-gray-500">Abu Dhabi. One lap shootout. The moment history changed forever.</p></div>
+            </div>
+            <div class="min-w-[300px] h-[400px] border border-[#333] p-6 flex flex-col justify-between hover:border-white transition-colors bg-[#111]">
+                <span class="text-6xl heading-font text-white">2022</span>
+                <div><h4 class="text-xl font-bold uppercase mb-2">New Regs</h4><p class="text-xs text-gray-500">Ground effect returns. The RB18 dominates the field.</p></div>
+            </div>
+            <div class="min-w-[300px] h-[400px] border border-[#333] p-6 flex flex-col justify-between hover:border-white transition-colors">
+                <span class="text-6xl heading-font text-gray-800">2023</span>
+                <div><h4 class="text-xl font-bold uppercase mb-2">Perfection</h4><p class="text-xs text-gray-500">21 Wins. The most dominant season in the history of the sport.</p></div>
+            </div>
+            <div class="min-w-[300px] h-[400px] border border-[#333] p-6 flex flex-col justify-between hover:border-white transition-colors">
+                <span class="text-6xl heading-font text-gray-800">2024</span>
+                <div><h4 class="text-xl font-bold uppercase mb-2">The Battle</h4><p class="text-xs text-gray-500">Competition rises. McLaren and Ferrari close the gap.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="p-6 md:p-24 border-b border-[#333]">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-[#333] pb-6">
+            <h2 class="text-5xl md:text-8xl heading-font uppercase">The Grid</h2>
+            <div class="text-right"><p class="text-xs text-gray-500">UPDATED: 14:00 UTC</p><p class="text-xs text-[#39FF14]">RACE 16/24</p></div>
+        </div>
+        <div class="w-full">
+            <div class="grid grid-cols-12 text-[10px] uppercase text-gray-500 pb-4 border-b border-[#333]">
+                <div class="col-span-1">#</div><div class="col-span-4">Driver</div><div class="col-span-3">Team</div><div class="col-span-2">Points</div><div class="col-span-2 text-right">Trend</div>
+            </div>
+            <div class="grid grid-cols-12 py-6 border-b border-[#333] hover:bg-[#111] items-center group">
+                <div class="col-span-1 text-2xl font-bold text-[#39FF14]">1</div><div class="col-span-4 text-xl md:text-3xl heading-font uppercase group-hover:translate-x-4 transition-transform">Verstappen</div><div class="col-span-3 text-xs text-gray-400">RED BULL RACING</div><div class="col-span-2 text-xl font-bold">302</div><div class="col-span-2 text-right text-[#39FF14] text-xs">▲ STABLE</div>
+            </div>
+            <div class="grid grid-cols-12 py-6 border-b border-[#333] hover:bg-[#111] items-center group">
+                <div class="col-span-1 text-2xl font-bold text-gray-600">2</div><div class="col-span-4 text-xl md:text-3xl heading-font uppercase group-hover:translate-x-4 transition-transform">Norris</div><div class="col-span-3 text-xs text-gray-400">MCLAREN</div><div class="col-span-2 text-xl font-bold">240</div><div class="col-span-2 text-right text-[#39FF14] text-xs">▲ RISING</div>
+            </div>
+            <div class="grid grid-cols-12 py-6 border-b border-[#333] hover:bg-[#111] items-center group">
+                <div class="col-span-1 text-2xl font-bold text-gray-600">3</div><div class="col-span-4 text-xl md:text-3xl heading-font uppercase group-hover:translate-x-4 transition-transform">Leclerc</div><div class="col-span-3 text-xs text-gray-400">FERRARI</div><div class="col-span-2 text-xl font-bold">215</div><div class="col-span-2 text-right text-red-500 text-xs">▼ FALLING</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 bg-white text-black border-b border-black overflow-hidden">
+        <p class="text-center text-[10px] font-bold tracking-widest mb-6">TECHNICAL PARTNERS</p>
+        <div class="animate-ticker-reverse flex whitespace-nowrap gap-16">
+            <span class="text-4xl heading-font font-bold uppercase">Oracle</span><span class="text-4xl heading-font font-bold uppercase">Honda</span><span class="text-4xl heading-font font-bold uppercase">ByBit</span><span class="text-4xl heading-font font-bold uppercase">Tag Heuer</span><span class="text-4xl heading-font font-bold uppercase">Mobil 1</span><span class="text-4xl heading-font font-bold uppercase">Siemens</span><span class="text-4xl heading-font font-bold uppercase">Oracle</span><span class="text-4xl heading-font font-bold uppercase">Honda</span><span class="text-4xl heading-font font-bold uppercase">ByBit</span><span class="text-4xl heading-font font-bold uppercase">Tag Heuer</span>
+        </div>
+    </section>
+
+    <section class="grid grid-cols-1 md:grid-cols-2 border-b border-[#333]">
+        <div class="p-12 md:p-24 border-b md:border-b-0 md:border-r border-[#333] bg-[#0a0a0a] flex flex-col justify-center">
+            <span class="text-[#39FF14] text-xs mb-4">/// MERCHANDISE</span>
+            <h2 class="text-6xl heading-font uppercase mb-6">Team Kit<br>2026</h2>
+            <p class="text-gray-400 mb-8 max-w-md">Official team wear. Engineered for performance. High breathability fabrics with carbon-fiber weave patterns.</p>
+            <button class="bg-white text-black w-max px-8 py-4 text-xs font-bold uppercase hover:bg-[#39FF14] transition-colors">Access Store</button>
+        </div>
+        <div class="relative min-h-[400px] overflow-hidden group">
+             <img src="https://images.unsplash.com/photo-1542282088-fe8426682b8f?q=80&w=1000" class="absolute inset-0 w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-700">
+             <div class="absolute bottom-0 left-0 p-8">
+                <span class="bg-red-600 text-white text-[10px] px-2 py-1 uppercase font-bold">Limited Drop</span>
+             </div>
+        </div>
+    </section>
+
+    <footer class="bg-black pt-20 pb-12 px-6 border-t-2 border-[#39FF14]">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
+            <div class="col-span-1 md:col-span-2">
+                <h2 class="text-4xl heading-font uppercase mb-6">Grid Zero</h2>
+                <p class="text-xs text-gray-500 max-w-sm leading-relaxed">
+                    We are an independent telemetry analysis unit. We process data to provide the rawest, unfiltered view of Formula 1. 
+                    <br><br>
+                    Engineered in Darkness.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-white text-xs font-bold uppercase mb-4">Sitemap</h4>
+                <ul class="text-[10px] text-gray-500 space-y-2 uppercase tracking-wider">
+                    <li class="hover:text-[#39FF14] cursor-pointer">Live Timing</li><li class="hover:text-[#39FF14] cursor-pointer">Archive</li><li class="hover:text-[#39FF14] cursor-pointer">Shop</li><li class="hover:text-[#39FF14] cursor-pointer">Protocol</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white text-xs font-bold uppercase mb-4">Connect</h4>
+                <ul class="text-[10px] text-gray-500 space-y-2 uppercase tracking-wider">
+                    <li class="hover:text-[#39FF14] cursor-pointer">Instagram</li><li class="hover:text-[#39FF14] cursor-pointer">Twitter / X</li><li class="hover:text-[#39FF14] cursor-pointer">Discord</li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-[#333] pt-8 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-600 uppercase">
+            <div>&copy; 2026 GRID ZERO SYSTEMS.</div>
+            <div class="flex gap-4 mt-4 md:mt-0"><span>Privacy Policy</span><span>Terms of Service</span></div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
