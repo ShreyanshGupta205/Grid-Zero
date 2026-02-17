@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRID ZERO | SYSTEM_PROTOCOL_MANUAL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --neon: #39FF14; --bg: #050505; --glass: rgba(20, 20, 20, 0.7); }
+        body { background-color: var(--bg); color: #888; font-family: 'JetBrains Mono', monospace; overflow-x: hidden; scroll-behavior: smooth; }
+        .heading-font { font-family: 'Oswald', sans-serif; }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--neon); }
+
+        /* GLITCH TEXT */
+        .glitch-text { animation: glitch 3s infinite; }
+        @keyframes glitch {
+            0% { text-shadow: 0 0 0px var(--neon); }
+            95% { text-shadow: 0 0 0px var(--neon); }
+            96% { text-shadow: -2px 0 5px var(--neon); }
+            97% { text-shadow: 2px 0 5px #fff; }
+            98% { text-shadow: -1px 0 10px var(--neon); }
+            100% { text-shadow: 0 0 0px var(--neon); }
+        }
+
+        /* SECTION CARDS */
+        .protocol-card {
+            background: linear-gradient(145deg, rgba(15,15,15,0.9), rgba(5,5,5,0.95));
+            border: 1px solid #222;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .protocol-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%;
+            background: #333; transition: background 0.3s;
+        }
+        .protocol-card:hover::before { background: var(--neon); }
+        .protocol-card:hover {
+            border-color: #333;
+            box-shadow: 0 0 40px -10px rgba(57, 255, 20, 0.05);
+            transform: translateX(5px);
+        }
+
+        /* STICKY NAV ACTIVE STATE */
+        .nav-link.active { color: var(--neon); border-left-color: var(--neon); padding-left: 1.5rem; background: linear-gradient(90deg, rgba(57,255,20,0.1), transparent); }
+        .nav-link { transition: all 0.3s; border-left: 2px solid transparent; }
+        
+        /* BACKGROUND GRID */
+        .bg-grid {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(#111 1px, transparent 1px), linear-gradient(90deg, #111 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: 0.2; z-index: -1;
+        }
+    </style>
+</head>
+<body class="selection:bg-[#39FF14] selection:text-black">
+
+    <div class="bg-grid"></div>
+
+    <header class="fixed top-0 w-full z-50 border-b border-[#333] bg-[#050505]/95 backdrop-blur-md px-6 py-4 flex justify-between items-center text-[10px] tracking-widest uppercase">
+        <div class="flex gap-6 items-center">
+            <div class="w-3 h-3 bg-[#39FF14] animate-pulse"></div>
+            <a href="../index.html" class="text-white font-bold text-lg hover:text-[#39FF14] transition-colors">GRID ZERO</a>
+            <span class="hidden md:inline text-gray-600">/// SECTOR: PROTOCOL_MANUAL_V12</span>
+        </div>
+        <div class="flex gap-6 items-center">
+            <a href="live.html" class="hover:text-white transition-colors">LIVE TIMING</a>
+            <div id="clock" class="text-white font-bold tabular-nums border-l border-[#333] pl-6">00:00:00</div>
+        </div>
+    </header>
+
+    <div class="max-w-[1600px] mx-auto pt-32 pb-20 px-6 flex flex-col md:flex-row gap-16">
+
+        <aside class="w-full md:w-1/4 relative hidden md:block">
+            <div class="sticky top-32">
+                <div class="mb-12">
+                    <h1 class="text-5xl text-white heading-font uppercase italic leading-none mb-2">System<br><span class="text-[#39FF14] glitch-text">Protocol</span></h1>
+                    <p class="text-[9px] text-gray-500 font-mono tracking-widest mt-4">/// DOC_REF: GZ-MAN-2026</p>
+                </div>
+                
+                <nav class="flex flex-col gap-1 text-[10px] font-bold font-mono tracking-widest uppercase text-gray-600">
+                    <a href="#sec-access" class="nav-link py-3 pl-4 hover:text-white hover:border-l-white active">01 // Access Control</a>
+                    <a href="#sec-live" class="nav-link py-3 pl-4 hover:text-white hover:border-l-white">02 // Live Telemetry</a>
+                    <a href="#sec-archive" class="nav-link py-3 pl-4 hover:text-white hover:border-l-white">03 // Legacy Data</a>
+                    <a href="#sec-supply" class="nav-link py-3 pl-4 hover:text-white hover:border-l-white">04 // Supply Depot</a>
+                    <a href="#sec-specs" class="nav-link py-3 pl-4 hover:text-white hover:border-l-white">05 // Hardware Specs</a>
+                    <a href="#sec-emergency" class="nav-link py-3 pl-4 hover:text-red-500 hover:border-l-red-500">06 // Emergency Protocols</a>
+                </nav>
+
+                <div class="mt-12 p-6 border border-[#333] bg-[#080808] text-[9px] font-mono text-gray-500">
+                    <div class="flex items-center gap-2 mb-2">
+                        <div class="w-1.5 h-1.5 bg-[#39FF14] rounded-full animate-pulse"></div>
+                        <span class="text-[#39FF14]">TERMINAL_LOG</span>
+                    </div>
+                    <p id="typewriter" class="h-20 leading-relaxed"></p>
+                </div>
+            </div>
+        </aside>
+
+        <main class="w-full md:w-3/4 space-y-32">
+
+            <section id="sec-access" class="scroll-mt-32">
+                <div class="flex items-end gap-4 mb-8 border-b border-[#333] pb-4">
+                    <span class="text-5xl heading-font text-[#39FF14] opacity-50">01</span>
+                    <h2 class="text-4xl text-white heading-font uppercase">Access Control</h2>
+                </div>
+                <div class="protocol-card p-10 rounded-r-lg">
+                    <p class="text-sm leading-relaxed mb-8 max-w-3xl">
+                        Grid Zero operates on a tiered clearance system to ensure data integrity. While public telemetry is available to all guests via the open-source API, deep-dive historical data requires authentication keys.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="p-6 bg-black/50 border border-[#222]">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-white text-xs font-bold uppercase tracking-widest">Level 1: Observer</h3>
+                                <span class="text-[9px] bg-[#222] px-2 py-1 text-gray-400">DEFAULT</span>
+                            </div>
+                            <ul class="space-y-2 text-[10px] text-gray-500 font-mono">
+                                <li class="flex gap-2"><span class="text-[#39FF14]">></span> Live Timing (Sector 1 Only)</li>
+                                <li class="flex gap-2"><span class="text-[#39FF14]">></span> Basic Archive View</li>
+                                <li class="flex gap-2"><span class="text-[#39FF14]">></span> Shop Requisition</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="p-6 bg-[#39FF14]/5 border border-[#39FF14]/30 relative overflow-hidden">
+                            <div class="absolute top-0 right-0 p-2 opacity-20"><svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z"/></svg></div>
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-[#39FF14] text-xs font-bold uppercase tracking-widest">Level 5: Engineer</h3>
+                                <span class="text-[9px] bg-[#39FF14] text-black font-bold px-2 py-1">RESTRICTED</span>
+                            </div>
+                            <ul class="space-y-2 text-[10px] text-[#39FF14] font-mono">
+                                <li class="flex gap-2"><span>></span> Full Telemetry Streams (4K)</li>
+                                <li class="flex gap-2"><span>></span> Blueprint / X-Ray Mode</li>
+                                <li class="flex gap-2"><span>></span> Priority Drop Access</li>
+                                <li class="flex gap-2"><span>></span> Team Radio Decryption</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-live" class="scroll-mt-32">
+                <div class="flex items-end gap-4 mb-8 border-b border-[#333] pb-4">
+                    <span class="text-5xl heading-font text-[#39FF14] opacity-50">02</span>
+                    <h2 class="text-4xl text-white heading-font uppercase">Live Telemetry</h2>
+                </div>
+                <div class="protocol-card p-10 rounded-r-lg">
+                    <p class="text-sm leading-relaxed mb-8 max-w-3xl">
+                        The <b class="text-white">Live Timing</b> interface connects directly to trackside transponders. Data packets are encrypted via AES-256 and transmitted with a latency of ~200ms.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex gap-6 items-start border-b border-[#222] pb-6">
+                            <div class="w-12 h-12 rounded-full border border-[#39FF14] flex items-center justify-center text-[#39FF14] font-bold text-lg flex-shrink-0">A</div>
+                            <div>
+                                <strong class="text-white text-xs uppercase tracking-widest block mb-2">Driver Tracker System</strong>
+                                <p class="text-[10px] text-gray-500 font-mono leading-relaxed">
+                                    Click any dot on the map to lock focus. The system will display real-time speed, gear, and RPM. If a driver enters the pit lane, the dot will change to a hollow ring.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-6 items-start border-b border-[#222] pb-6">
+                            <div class="w-12 h-12 rounded-full border border-red-500 flex items-center justify-center text-red-500 font-bold text-lg flex-shrink-0">B</div>
+                            <div>
+                                <strong class="text-white text-xs uppercase tracking-widest block mb-2">Critical Zones</strong>
+                                <p class="text-[10px] text-gray-500 font-mono leading-relaxed">
+                                    Red zones on the track map indicate heavy braking events (>4G). Yellow pulsing zones indicate active flags or debris. Do not rely on sector times during yellow flag conditions.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-6 items-start">
+                            <div class="w-12 h-12 rounded-full border border-blue-500 flex items-center justify-center text-blue-500 font-bold text-lg flex-shrink-0">C</div>
+                            <div>
+                                <strong class="text-white text-xs uppercase tracking-widest block mb-2">Gap Analysis</strong>
+                                <p class="text-[10px] text-gray-500 font-mono leading-relaxed">
+                                    The interval column updates every micro-sector. A purple indicator denotes a "Fastest Sector" overall, while green indicates a personal best for that driver.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-archive" class="scroll-mt-32">
+                <div class="flex items-end gap-4 mb-8 border-b border-[#333] pb-4">
+                    <span class="text-5xl heading-font text-[#39FF14] opacity-50">03</span>
+                    <h2 class="text-4xl text-white heading-font uppercase">Legacy Data</h2>
+                </div>
+                <div class="protocol-card p-10 rounded-r-lg">
+                    <p class="text-sm leading-relaxed mb-8 max-w-3xl">
+                        The <b class="text-white">Archive</b> contains classified chassis data from 2005 to present. This database is manually curated by the Heritage Department.
+                    </p>
+                    
+                    <div class="bg-[#0a0a0a] border-l-4 border-[#39FF14] p-6 mb-8">
+                        <p class="text-[#39FF14] text-xs font-bold uppercase mb-2">Feature Focus: Blueprint Mode</p>
+                        <p class="text-[10px] text-gray-500 font-mono leading-relaxed">
+                            Toggle the switch in the archive header to invert the visual feed. This reveals internal X-Ray schematics including cooling ducts, suspension geometry, and fuel cell placement.
+                            <br><br>
+                            <span class="text-white">NOTE:</span> Some aerodynamic surfaces on recent cars (2024+) may be redacted due to IP protection laws.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                        <div class="bg-[#111] p-4 border border-[#222]">
+                            <div class="text-[#39FF14] text-xl font-bold">V8</div>
+                            <div class="text-[8px] text-gray-600 uppercase mt-1">2006-2013</div>
+                        </div>
+                        <div class="bg-[#111] p-4 border border-[#222]">
+                            <div class="text-[#39FF14] text-xl font-bold">TURBO</div>
+                            <div class="text-[8px] text-gray-600 uppercase mt-1">2014-2021</div>
+                        </div>
+                        <div class="bg-[#111] p-4 border border-[#222]">
+                            <div class="text-[#39FF14] text-xl font-bold">GROUND</div>
+                            <div class="text-[8px] text-gray-600 uppercase mt-1">2022-PRES</div>
+                        </div>
+                        <div class="bg-[#111] p-4 border border-[#222] opacity-50">
+                            <div class="text-gray-500 text-xl font-bold">???</div>
+                            <div class="text-[8px] text-gray-600 uppercase mt-1">2026-FUT</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-supply" class="scroll-mt-32">
+                <div class="flex items-end gap-4 mb-8 border-b border-[#333] pb-4">
+                    <span class="text-5xl heading-font text-[#39FF14] opacity-50">04</span>
+                    <h2 class="text-4xl text-white heading-font uppercase">Supply Depot</h2>
+                </div>
+                <div class="protocol-card p-10 rounded-r-lg">
+                    <p class="text-sm leading-relaxed mb-8 max-w-3xl">
+                        Official team kit and hardware replicas can be acquired via the Supply Depot. Inventory is linked to the global warehouse API and updates every 60 seconds.
+                    </p>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="text-[10px] text-gray-500 uppercase border-b border-[#333]">
+                                    <th class="py-3 font-normal tracking-widest">Status Indicator</th>
+                                    <th class="py-3 font-normal tracking-widest">Meaning</th>
+                                    <th class="py-3 font-normal tracking-widest">Action Required</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-[10px] font-mono text-gray-400">
+                                <tr class="border-b border-[#222]">
+                                    <td class="py-4 text-[#39FF14]">[IN_STOCK]</td>
+                                    <td class="py-4">Item available for immediate dispatch.</td>
+                                    <td class="py-4">Proceed to checkout.</td>
+                                </tr>
+                                <tr class="border-b border-[#222]">
+                                    <td class="py-4 text-yellow-500 animate-pulse">[LOW_STOCK]</td>
+                                    <td class="py-4">Less than 10 units remaining globally.</td>
+                                    <td class="py-4">Immediate acquisition recommended.</td>
+                                </tr>
+                                <tr class="border-b border-[#222]">
+                                    <td class="py-4 text-blue-400">[PRE_ORDER]</td>
+                                    <td class="py-4">Item in production phase.</td>
+                                    <td class="py-4">Reserve to guarantee allocation.</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 text-red-500">[SOLD_OUT]</td>
+                                    <td class="py-4">Production run complete. No restock.</td>
+                                    <td class="py-4">Check secondary markets.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-specs" class="scroll-mt-32">
+                <div class="flex items-end gap-4 mb-8 border-b border-[#333] pb-4">
+                    <span class="text-5xl heading-font text-[#39FF14] opacity-50">05</span>
+                    <h2 class="text-4xl text-white heading-font uppercase">System Requirements</h2>
+                </div>
+                <div class="protocol-card p-10 rounded-r-lg">
+                    <p class="text-sm leading-relaxed mb-8 max-w-3xl">
+                        To maintain high-fidelity visualization of the 3D car models and live telemetry streams, specific hardware parameters must be met.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-[10px] font-mono">
+                        <div class="bg-[#050505] border border-[#222] p-6">
+                            <h4 class="text-white mb-4 uppercase tracking-widest border-b border-[#333] pb-2">Minimum Specs</h4>
+                            <div class="flex justify-between py-1 border-b border-[#222/50]"><span>GPU</span><span class="text-gray-500">WebGL 1.0 Compatible</span></div>
+                            <div class="flex justify-between py-1 border-b border-[#222/50]"><span>RAM</span><span class="text-gray-500">4GB DDR3</span></div>
+                            <div class="flex justify-between py-1 border-b border-[#222/50]"><span>Network</span><span class="text-gray-500">4G / 10 Mbps</span></div>
+                            <div class="flex justify-between py-1 pt-2"><span>Browser</span><span class="text-gray-500">Chrome 80+ / Safari 14+</span></div>
+                        </div>
+                        <div class="bg-[#050505] border border-[#39FF14] p-6 relative">
+                            <div class="absolute top-0 right-0 bg-[#39FF14] text-black px-2 text-[9px] font-bold">RECOMMENDED</div>
+                            <h4 class="text-[#39FF14] mb-4 uppercase tracking-widest border-b border-[#333] pb-2">Optimal Performance</h4>
+                            <div class="flex justify-between py-1 border-b border-[#222/50]"><span>GPU</span><span class="text-gray-500">NVIDIA RTX 3060+</span></div>
+                            <div class="flex justify-between py-1 border-b border-[#222/50]"><span>RAM</span><span class="text-gray-500">16GB DDR4</span></div>
+                            <div class="flex justify-between py-1 border-b border-[#222/50]"><span>Network</span><span class="text-gray-500">Fiber / 100 Mbps</span></div>
+                            <div class="flex justify-between py-1 pt-2"><span>Browser</span><span class="text-gray-500">Latest Chrome / Edge</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-emergency" class="scroll-mt-32">
+                <div class="flex items-end gap-4 mb-8 border-b border-[#333] pb-4">
+                    <span class="text-5xl heading-font text-red-500 opacity-50">06</span>
+                    <h2 class="text-4xl text-white heading-font uppercase">Emergency Protocols</h2>
+                </div>
+                <div class="protocol-card p-10 rounded-r-lg border-l-4 border-l-red-600">
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="w-8 h-8 flex items-center justify-center bg-red-500/20 text-red-500 rounded border border-red-500">!</div>
+                        <div>
+                            <h3 class="text-white text-lg heading-font uppercase">Critical Failure Response</h3>
+                            <p class="text-xs text-red-400 mt-1">CODE: RED_FLAG_SUSPENSION</p>
+                        </div>
+                    </div>
+                    
+                    <p class="text-sm leading-relaxed mb-6 text-gray-400">
+                        In the event of a server-side outage or a Formula 1 session "Red Flag," the telemetry feed will automatically pause. Do not refresh your browser. The system will attempt to reconnect every 10 seconds.
+                    </p>
+
+                    <div class="bg-red-900/10 border border-red-900/30 p-4 text-[10px] text-red-400 font-mono">
+                        <p class="mb-2">IF CONNECTION_LOSS > 60s:</p>
+                        <ol class="list-decimal list-inside space-y-1 opacity-80">
+                            <li>Check local network latency.</li>
+                            <li>Clear browser cache (CTRL + F5).</li>
+                            <li>Switch to backup audio stream via the "Intel" tab.</li>
+                            <li>Await official confirmation from Race Control.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer class="bg-black pt-20 pb-12 px-6 border-t-2 border-[#39FF14] mt-32">
+        <div class="max-w-[1600px] mx-auto flex justify-between items-center text-[10px] text-gray-600 uppercase tracking-widest">
+            <div>&copy; 2026 GRID ZERO SYSTEMS.</div>
+            <a href="../index.html" class="hover:text-white transition-colors">RETURN_TO_BASE</a>
+        </div>
+    </footer>
+
+    <script>
+        // 1. CLOCK
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toLocaleTimeString('en-GB');
+        }, 1000);
+
+        // 2. TYPEWRITER EFFECT
+        const textLines = [
+            "Initializing protocol viewer...",
+            "Loading security modules...",
+            "Decrypting access logs...",
+            "Verifying user clearance...",
+            "Access Granted.",
+            "Welcome, User."
+        ];
+        let lineIndex = 0;
+        let charIndex = 0;
+        const typeContainer = document.getElementById("typewriter");
+
+        function typeWriter() {
+            if (lineIndex < textLines.length) {
+                const currentLine = textLines[lineIndex];
+                if (charIndex < currentLine.length) {
+                    typeContainer.innerHTML += currentLine.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeWriter, 20);
+                } else {
+                    typeContainer.innerHTML += "<br>";
+                    lineIndex++;
+                    charIndex = 0;
+                    setTimeout(typeWriter, 300);
+                }
+            }
+        }
+        window.onload = typeWriter;
+
+        // 3. ACTIVE NAV HIGHLIGHT
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= (sectionTop - 300)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
